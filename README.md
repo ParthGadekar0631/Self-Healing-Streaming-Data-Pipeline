@@ -170,15 +170,6 @@ docker compose config --quiet
 
 Tests focus on deterministic domain logic and use in-memory/fake publishers rather than requiring Kafka, Spark, or Redis. CI runs Python 3.11, installs dependencies, validates imports, runs tests, and validates the Compose model.
 
-## Resume-ready summary
-
-**Self-Healing Streaming Data Pipeline**  
-Personal Project | Python, Apache Kafka, PySpark Structured Streaming, Redis, Parquet, Docker, Kubernetes
-
-- Built a streaming pipeline that validates, transforms, deduplicates, and aggregates events using Kafka and PySpark.
-- Enforced schema and quality rules, routing malformed records to quarantine topics with error context and replay support.
-- Implemented automated failure detection, checkpoint recovery, exponential retries, and idempotent processing across restarts.
-- Added an AI-assisted incident module that summarizes failures and recommends recovery actions from logs and pipeline metadata.
 
 ## Limitations and future work
 
