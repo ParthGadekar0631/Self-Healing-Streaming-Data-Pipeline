@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pipeline-data
+  namespace: self-healing-pipeline
+spec:
+  accessModes: [ReadWriteMany]
+  resources:
+    requests:
+      storage: 20Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: streaming-pipeline
+  namespace: self-healing-pipeline
+  labels:
+    app: streaming-pipeline
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: streaming-pipeline
+  template:
+    metadata:
+      labels:
+        app: streaming-pipeline
+    spec:
+      terminationGracePeriodSeconds: 60
+      containers:
+        - name: pipeline
+          # Replace with the immutable image built from deployments/docker/Dockerfile.pipeline.
+          image: ghcr.io/your-org/self-healing-streaming-pipeline:latest
+          imagePullPolicy: IfNotPresent
+          command:
+            - spark-submit
+            - --packages
+            - org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.6
+            - main.py
+            - pipeline
+          envFrom:
+            - configMapRef:
+                name: pipeline-config
+            - secretRef:
+                name: pipeline-secrets
+                optional: true
+          resources:
+            requests: {cpu: "1", memory: 2Gi}
+            limits: {cpu: "2", memory: 4Gi}
+          volumeMounts:
+            - name: pipeline-data
+              mountPath: /data
+          livenessProbe:
+            exec:
+              command: ["sh", "-c", "test -f /data/metadata/pipeline_status.json"]
+            initialDelaySeconds: 90
+            periodSeconds: 30
+      volumes:
+        - name: pipeline-data
+          persistentVolumeClaim:
+            claimName: pipeline-data

@@ -1,0 +1,9 @@
+retry:
+  max_attempts: 5
+  base_delay_seconds: 2
+  max_delay_seconds: 30
+  multiplier: 2
+  jitter_seconds: 0.5
+replay:
+  max_retry_count: 3
+  publish_to_raw_after_replay: true

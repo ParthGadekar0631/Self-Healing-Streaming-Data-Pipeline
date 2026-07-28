@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Event",
+  "type": "object",
+  "required": ["event_id", "event_type", "event_timestamp", "ingestion_timestamp", "source_system", "region", "payload_version", "metadata"],
+  "properties": {
+    "event_id": {"type": "string", "minLength": 1},
+    "user_id": {"type": ["string", "null"]},
+    "device_id": {"type": ["string", "null"]},
+    "event_type": {"enum": ["page_view", "click", "purchase", "sensor_reading", "error_event", "heartbeat"]},
+    "event_timestamp": {"type": "string", "format": "date-time"},
+    "ingestion_timestamp": {"type": "string", "format": "date-time"},
+    "source_system": {"type": "string", "minLength": 1},
+    "region": {"enum": ["us-east", "us-west", "eu-west", "ap-south"]},
+    "session_id": {"type": ["string", "null"]},
+    "event_value": {"type": ["number", "null"]},
+    "event_status": {"type": "string"},
+    "payload_version": {"enum": ["1.0", "1.1"]},
+    "metadata": {"type": "object", "minProperties": 1}
+  },
+  "anyOf": [{"required": ["user_id"]}, {"required": ["device_id"]}],
+  "additionalProperties": true
+}

@@ -1,0 +1,14 @@
+# This ExternalName is a service reference, not an in-cluster production Kafka deployment.
+# Replace the DNS name with your managed or separately operated Kafka bootstrap endpoint.
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka
+  namespace: self-healing-pipeline
+spec:
+  type: ExternalName
+  externalName: kafka-bootstrap.example.internal
+  ports:
+    - name: broker
+      port: 9092
+      targetPort: 9092

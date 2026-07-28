@@ -1,0 +1,8 @@
+topics:
+  events.raw: {partitions: 3, replication_factor: 1, retention_ms: 604800000}
+  events.validated: {partitions: 3, replication_factor: 1, retention_ms: 604800000}
+  events.transformed: {partitions: 3, replication_factor: 1, retention_ms: 604800000}
+  events.aggregated: {partitions: 3, replication_factor: 1, retention_ms: 2592000000}
+  events.quarantine: {partitions: 3, replication_factor: 1, retention_ms: 2592000000}
+  events.dead_letter: {partitions: 3, replication_factor: 1, retention_ms: -1}
+  events.replay: {partitions: 3, replication_factor: 1, retention_ms: 604800000}

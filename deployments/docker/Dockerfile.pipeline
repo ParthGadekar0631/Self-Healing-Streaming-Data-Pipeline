@@ -1,0 +1,17 @@
+FROM bitnami/spark:3.5.6
+
+USER root
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+RUN mkdir -p /app/data/checkpoints /app/data/parquet /app/data/metadata \
+    && chown -R 1001:0 /app
+
+USER 1001
+ENV PYTHONPATH=/app \
+    PYTHONUNBUFFERED=1
+
+CMD ["spark-submit", "--packages", "org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.6", "main.py", "pipeline"]

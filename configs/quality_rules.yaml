@@ -1,0 +1,25 @@
+required_fields:
+  - event_id
+  - event_timestamp
+  - event_type
+  - source_system
+  - region
+  - payload_version
+allowed_event_types:
+  - page_view
+  - click
+  - purchase
+  - sensor_reading
+  - error_event
+  - heartbeat
+allowed_regions: [us-east, us-west, eu-west, ap-south]
+supported_payload_versions: ["1.0", "1.1"]
+identity:
+  require_user_or_device: true
+metadata:
+  required: true
+event_value:
+  numeric_when_present: true
+  non_negative_event_types: [page_view, click, purchase, sensor_reading, heartbeat]
+event_timestamp:
+  future_tolerance_minutes: 5

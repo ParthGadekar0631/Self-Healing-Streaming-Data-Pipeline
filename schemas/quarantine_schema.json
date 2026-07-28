@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "QuarantineRecord",
+  "type": "object",
+  "required": ["original_payload", "error_type", "error_message", "failed_field", "processing_timestamp", "replay_eligible", "retry_count"],
+  "properties": {
+    "original_payload": {},
+    "error_type": {"type": "string"},
+    "error_message": {"type": "string"},
+    "failed_field": {"type": ["string", "null"]},
+    "processing_timestamp": {"type": "string", "format": "date-time"},
+    "replay_eligible": {"type": "boolean"},
+    "retry_count": {"type": "integer", "minimum": 0}
+  }
+}

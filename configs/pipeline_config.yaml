@@ -1,0 +1,13 @@
+pipeline:
+  trigger_interval: "10 seconds"
+  starting_offsets: latest
+  fail_on_data_loss: false
+  dedup_watermark: "10 minutes"
+  aggregation_window: "5 minutes"
+  output_mode: append
+  clean_partition_columns: [event_date, region]
+  aggregate_partition_columns: [window_date, event_type]
+spark:
+  shuffle_partitions: 8
+  state_store_provider: org.apache.spark.sql.execution.streaming.state.HDFSBackedStateStoreProvider
+  kafka_package: org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.6
